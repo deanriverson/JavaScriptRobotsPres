@@ -1,0 +1,14 @@
+ul.whoami {
+    list-style: none;
+}
+
+ul.whoami li {
+    margin-bottom: 1em;
+}
+
+img.plain {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 5px  !important;
+}
