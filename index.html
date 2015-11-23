@@ -344,19 +344,135 @@ five.Board().on("ready", function() {
 				</section>
 
                 <section>
+                    <h3>Inputs</h3>
+                    <ul class="inputs-list">
+                        <li>Accelerometer</li>
+                        <li>Gyro</li>
+                        <li>Button</li>
+                        <li>Compass</li>
+                        <li>Joystick</li>
+                        <li>Ultrasonics</li>
+                        <li>LIDAR Lite</li>
+                        <li>Infrared</li>
+                        <li>Analog Inputs</li>
+                        <li>Keypad</li>
+                        <li>Relays</li>
+                        <li>Motion</li>
+                        <li>Temperature</li>
+                        <li>Barometer</li>
+                        <li>And much more...</li>
+                    </ul>
                 </section>
 
                 <section>
+                    <h3>LIDAR Lite</h3>
+                    <img src="img/lidar-lite.png" height="400">
                 </section>
 
                 <section>
+                    <h3>Wire It Up!</h3>
+                    <img src="img/lidarlite-circuit.png" height="400">
 				</section>
 
                 <section>
+                    <p>lidarlite.js</p>
+<pre><code data-trim>
+var five = require("johnny-five");
+
+five.Board().on("ready", function() {
+    var proximity = new five.Proximity({
+        controller: "LIDARLITE"
+    });
+
+    proximity.on("data", function() {
+        console.log("Proximity: ");
+        console.log("  cm  : ", this.cm);
+    });
+
+    proximity.on("change", function() {
+        console.log(this.cm + "cm");
+    });
+});
+</code></pre>
                 </section>
 
 				<section>
+                    <h3>LIDAR Lite + Servo</h3>
+                    <img src="img/lidar-servo.png" height="400">
 				</section>
+
+                <section>
+                    <p>claw.js</p>
+<small><pre><code data-trim style="min-width: 600px; min-height: 450px;">
+var five = require("johnny-five");
+
+five.Board().on("ready", function() {
+    var claw = new five.Servo(9);
+    var arm = five.Servo(10);
+    var degrees = 10;
+    var incrementer = 10;
+    var last;
+
+    this.loop(25, function() {
+        if (degrees >= 180 || degrees === 0) {
+            incrementer *= -1;
+        }
+
+        degrees += incrementer;
+
+        if (degrees === 180) {
+            if (!last || last === 90) {
+                last = 180;
+            } else {
+                last = 90;
+            }
+            arm.to(last);
+        }
+
+        claw.to(degrees);
+    });
+});
+</code></pre></small>
+                </section>
+
+                <section>
+                    <p>joystick.js</p>
+<small><pre><code data-trim style="min-width: 600px; min-height: 450px;">
+var five = require("johnny-five");
+
+five.Board().on("ready", function() {
+    var claw = new five.Servo(9);
+    var arm = five.Servo(10);
+    var degrees = 10;
+    var incrementer = 10;
+    var last;
+
+    this.loop(25, function() {
+        if (degrees >= 180 || degrees === 0) {
+            incrementer *= -1;
+        }
+
+        degrees += incrementer;
+
+        if (degrees === 180) {
+            if (!last || last === 90) {
+                last = 180;
+            } else {
+                last = 90;
+            }
+            arm.to(last);
+        }
+
+        claw.to(degrees);
+    });
+});
+</code></pre></small>
+                </section>
+
+                <section>
+                    <p class="green">http://johnny-five.io/examples/</p>
+                    <p>for many more examples.</p>
+                </section>
 			</div>
 
 		</div>

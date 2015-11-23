@@ -20,10 +20,25 @@ span.red {
     font-weight: bold;
 }
 
+p.green {
+    color: green;
+    font-size: 100%;
+    font-weight: bold;
+}
+
 #us-first {
     margin-top: -0.5em;
 }
 
 #pwm-slider {
     font-size: 80%;
+}
+
+.inputs-list {
+    max-width: 680px;
+}
+
+.inputs-list li {
+    display: inline-block;
+    padding: 20px;
 }
