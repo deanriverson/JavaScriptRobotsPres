@@ -206,7 +206,7 @@ five.Board().on("ready", function() {
                         </div>
 
                         <div id="pwm-slider">
-                            <label for="widthSlider">Duty Cycle:</label>
+                            <label for="widthSlider" style="font-size: 80%">Duty Cycle:</label>
                             <input type="range" min="0" max="100" value="50" id="widthSlider" step="1" oninput="pwm.updateGraph(value)">
                             <output for="widthSlider" id="dutyCycle">50</output>
                             <label>%</label>
@@ -234,6 +234,8 @@ five.Board().on("ready", function() {
                 </section>
 
 				<section>
+                    <h3>Output: Speakers</h3>
+                    <img src="img/piezo.png">
 				</section>
 
 				<section>
