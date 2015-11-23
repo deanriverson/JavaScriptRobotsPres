@@ -162,7 +162,7 @@ console.log("Waiting for board to be ready...");
 var five = require('johnny-five');
 
 five.Board().on("ready", function() {
-    five.Led(11).strobe(500);
+    five.Led(11).blink(500);
 });
                     </code></pre>
                 </section>
@@ -215,6 +215,11 @@ five.Board().on("ready", function() {
                 </section>
 
                 <section>
+                    <h3>Arduino PWM</h3>
+                    <img src="img/arduino.png" height="400">
+                </section>
+
+                    <section>
                     <h2>What Makes a Robot?</h2>
                     <ul>
                         <li>Input
@@ -472,6 +477,141 @@ five.Board().on("ready", function() {
                 <section>
                     <p class="green">http://johnny-five.io/examples/</p>
                     <p>for many more examples.</p>
+                </section>
+
+                <section>
+                    <h2>Cutting the Chord</h2>
+                </section>
+
+                <section>
+                    <h3>BeagleBone Black</h3>
+                    <img src="img/bbb.png">
+                    <p><small>http://beagleboard.org/</small></p>
+                </section>
+
+                <section>
+                    <p>blinky.js</p>
+<pre><code data-trim style="min-width: 600px; min-height: 450px;">
+var five = require("johnny-five");
+var BeagleBone = require("beaglebone-io");
+// var raspi = require('raspi-io');
+
+var board = new five.Board({
+    io: new BeagleBone()
+});
+
+board.on("ready", function() {
+    five.Led("P9_14").blink(500);
+});
+</code></pre>
+                </section>
+
+                <section>
+                    <h3>Tessel</h3>
+                    <img src="img/tessel.png" height="400">
+                    <p><small>http://tessel.io</small></p>
+                </section>
+
+                <section>
+                    <h3>Installation</h3>
+                    <ol style="font-size: 80%">
+                        <li>Plug Tessel into USB port</li>
+                        <li><code>$ npm install -g tessel</code></li>
+                        <li><code>$ tessel update</code></li>
+                    </ol>
+                    <p><small><em>Note: Requires Node 0.12.7</em></small></p>
+                </section>
+
+                <section>
+                    <p>blinky.js</p>
+<pre><code data-trim style="min-width: 600px;">
+var tessel = require('tessel');
+
+var led1 = tessel.led[0].output(1);
+var led2 = tessel.led[1].output(0);
+
+console.log("I'm blinking! (Press CTRL + C to stop)");
+
+setInterval(function () {
+    // Toggle the led states
+    led1.toggle();
+    led2.toggle();
+}, 100);
+</code></pre>
+                    <p><small><code>$ tessel run blinky.js</code></small></p>
+                </section>
+
+                <section>
+                    <p><code>$ tessel _____</code></p>
+                    <ul style="font-size: 80%">
+                        <li><code>help</code> (list these commands)</li>
+                        <li><code>run</code> (run a program)</li>
+                        <li><code>stop</code> (stop a program)</li>
+                        <li><code>push</code> (upload and run at boot)</li>
+                        <li><code>erase</code> (clears flash)</li>
+                        <li><code>wifi</code> (lists available networks)</li>
+                        <li><code>logs</code> (show recent activity)</li>
+                        <li><code>list</code> (shows connected Tessels)</li>
+                        <li><code>update</code> (update firmware)</li>
+                    </ul>
+                    <p><small>https://github.com/tessel/t1-docs</small></p>
+                </section>
+
+                <section>
+                    <h3>Modules</h3>
+                    <ul class="inputs-list">
+                        <li>Accelerometer</li>
+                        <li>Ambient Light + Sound</li>
+                        <li>Audio</li>
+                        <li>Bluetooth Low Energy</li>
+                        <li>Camera</li>
+                        <li>Climate</li>
+                        <li>GPRS</li>
+                        <li>GPS</li>
+                        <li>Infrared</li>
+                        <li>MicroSD Card</li>
+                        <li>nRF24</li>
+                        <li>Relay</li>
+                        <li>RFID</li>
+                        <li>Servo</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Climate Example</h3>
+                    <img src="img/climate.png" height="200" style="float: right">
+                    <ol>
+                        <li>Plug climate module into port A</li>
+                        <li><code>npm install climate-si7005</code></li>
+                    </ol>
+                </section>
+
+                <section>
+                    <p>climate.js</p>
+<pre><code data-trim style="min-width: 800px; font-size: 80%">
+var tessel = require('tessel');
+var climatelib = require('climate-si7005');
+var climate = climatelib.use(tessel.port['A']);
+climate.on('ready', function() {
+    console.log('Connected to si7005');
+
+    // Loop forever
+    setImmediate(function loop() {
+        climate.readTemperature('f', function (err, temp) {
+            climate.readHumidity(function (err, humid) {
+                console.log('Degrees:', temp.toFixed(4) + 'F',
+                            'Humidity:', humid.toFixed(4) + '%RH');
+                setTimeout(loop, 300);
+            });
+        });
+    });
+});
+</code></pre>
+                    <p><small><code>$ tessel run climate.js</code></small></p>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
                 </section>
 			</div>
 
