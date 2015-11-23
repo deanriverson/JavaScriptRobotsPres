@@ -137,7 +137,7 @@
 				</section>
 
                 <section>
-                    <h2>Hello World!</h2>
+                    <p>blinky.js</p>
                     <pre><code data-trim>
 var five = require('johnny-five');
 
@@ -157,7 +157,7 @@ console.log("Waiting for board to be ready...");
                 </section>
 
                 <section>
-                    <h2>Hello World!</h2>
+                    <p>blinky2.js</p>
                     <pre><code data-trim>
 var five = require('johnny-five');
 
@@ -168,7 +168,7 @@ five.Board().on("ready", function() {
                 </section>
 
                 <section>
-                    <h2>Interactive LED</h2>
+                    <p>led.js</p>
                     <pre><code data-trim>
 var five = require('johnny-five');
 
@@ -239,33 +239,108 @@ five.Board().on("ready", function() {
 				</section>
 
 				<section>
+                    <h3>Wire It Up!</h3>
+                    <img src="img/piezo-circuit.png" height="400">
 				</section>
 
 				<section>
+                    <p>piezo.js</p>
+<pre><code data-trim>
+    var five = require("johnny-five");
+
+    five.Board().on("ready", function() {
+        five.Piezo(3).play({
+            // A song is an array of pairs of notes and beats.
+            // The first arg is the note (null == "no note").
+            // The second argu is the length of time (beat).
+            song: [
+                ["C4", 1 / 4],
+                ["D4", 1 / 4],
+                ["F4", 1 / 4],
+                ["D4", 1 / 4],
+                ["A4", 1 / 4],
+                [null, 1 / 4],
+                ["A4", 1],
+                ["G4", 1],
+                [null, 1 / 2],
+                ["C4", 1 / 4],
+                ["D4", 1 / 4],
+                ["F4", 1 / 4],
+                ["D4", 1 / 4],
+                ["G4", 1 / 4],
+                [null, 1 / 4],
+                ["G4", 1],
+                ["F4", 1],
+                [null, 1 / 2]
+            ],
+            tempo: 100
+        });
+    });
+</code></pre>
 				</section>
 
 				<section>
+                    <p>songs.js</p>
+<pre><code data-trim>
+var five = require("johnny-five");
+var songs = require("j5-songs")
+
+five.Board().on("ready", function() {
+    var piezo = new five.Piezo(3);
+
+    this.repl.inject({
+        song: piezo,
+        beet: songs.load('beethovens-fifth'),
+        starwars: songs.load('starwars-theme'),
+        mario: songs.load('mario-intro')
+    });
+});
+</code></pre>
 				</section>
 
 				<section>
+                    <h3>Output: Motors</h3>
+                    <img src="img/dc-motor.png" height="300">
+                    <img src="img/servo.png" height="300">
 				</section>
 
 				<section>
+                    <h3>DC Motors on the Inside</h3>
+                    <img src="img/dc-motor-cross.png" height="400">
 				</section>
 
 				<section>
+                    <h3>H-Bridge Motor Controller</h3>
+                    <img src="img/h-bridge.png">
 				</section>
 
 				<section>
+                    <h3>Motor Encoder</h3>
+                    <img src="img/encoder.png" width="400">
 				</section>
 
 				<section>
+                    <h3>Servos on the Inside</h3>
+                    <img src="img/servo-cross.png" alt="">
 				</section>
 
 				<section>
+                    <h3>Wire It Up!</h3>
+                    <img src="img/servo-circuit.png" height="400">
 				</section>
 
 				<section>
+                    <p>servo.js</p>
+<pre><code data-trim>
+var five = require('johnny-five');
+
+five.Board().on("ready", function() {
+    this.repl.inject({
+        // min(), max(), sweep(), stop(), center()
+        servo: five.Servo(10)
+    });
+});
+</code></pre>
 				</section>
 
                 <section>
