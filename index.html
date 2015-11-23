@@ -413,7 +413,7 @@ var five = require("johnny-five");
 
 five.Board().on("ready", function() {
     var claw = new five.Servo(9);
-    var arm = five.Servo(10);
+    var arm = new five.Servo(10);
     var degrees = 10;
     var incrementer = 10;
     var last;
@@ -446,30 +446,24 @@ five.Board().on("ready", function() {
 var five = require("johnny-five");
 
 five.Board().on("ready", function() {
-    var claw = new five.Servo(9);
-    var arm = five.Servo(10);
-    var degrees = 10;
-    var incrementer = 10;
-    var last;
+    var pan, tilt, joystick;
 
-    this.loop(25, function() {
-        if (degrees >= 180 || degrees === 0) {
-            incrementer *= -1;
-        }
+    // Pan & tilt servos
+    pan = new five.Servo(9);
+    tilt = new five.Servo(10);
 
-        degrees += incrementer;
+    // Joystick controller
+    joystick = new five.Joystick({
+        pins: [ 'A0', 'A1' ]
+    })
 
-        if (degrees === 180) {
-            if (!last || last === 90) {
-                last = 180;
-            } else {
-                last = 90;
-            }
-            arm.to(last);
-        }
+    // Center all servos
+    five.Servos.center();
 
-        claw.to(degrees);
-    });
+    joystick.on('change', function() {
+        tilt.move(Math.ceil(180 * this.y));
+        pan.move(Math.ceil(180 * this.x));
+    })
 });
 </code></pre></small>
                 </section>
@@ -480,7 +474,7 @@ five.Board().on("ready", function() {
                 </section>
 
                 <section>
-                    <h2>Cutting the Chord</h2>
+                    <h2>Cutting the Cord</h2>
                 </section>
 
                 <section>
