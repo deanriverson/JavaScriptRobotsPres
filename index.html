@@ -30,7 +30,10 @@
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
-		<!--[if lt IE 9]>
+        <script src="lib/js/d3.v3.min.js" charset="utf-8"></script>
+        <script src="js/pwm.js" charset="utf-8"></script>
+
+        <!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
 	</head>
@@ -111,13 +114,24 @@
                     <img src="img/leds.jpg">
 				</section>
 
+                <section>
+                    <h3>Breadboards 101</h3>
+                    <img src="img/breadboard.png">
+                </section>
+
+                <section>
+                    <h3>Wire It Up!</h3>
+                    <img src="img/blinky.png">
+                </section>
+
 				<section>
-                    <h2>Setting Up an Arduino</h2>
-                    <ol>
-                        <li>Plug Arduino into USB port.</li>
-                        <li>Open Arduino IDE.</li>
+                    <h3>Setting Up an Arduino</h3>
+                    <img src="img/arduino.png" height="350" style="float: right;">
+                    <ol style="display: inline;">
+                        <li>Plug Arduino into USB port</li>
+                        <li>Open Arduino IDE</li>
                         <li>Set correct board</li>
-                        <li>File&rarr;Examples&rarr;Firmata&rarr;StandardFirmata</li>
+                        <li>File&rarr;Examples&rarr;<br>Firmata&rarr;StandardFirmata</li>
                         <li>Upload Sketch</li>
                     </ol>
 				</section>
@@ -169,6 +183,38 @@ five.Board().on("ready", function() {
                 </section>
 
                 <section>
+                    <h3>Dimming LEDs??</h3>
+                    <p>
+                        The hard way and the easy way...
+                    </p>
+                </section>
+
+                <section id="pwm">
+                    <h3>PWM</h3>
+                    <p id="us-first"><small>
+                        <span class="red">P</span>ulse
+                        <span class="red">W</span>idth
+                        <span class="red">M</span>odulation
+                    </small></p>
+                    <div id="pwm-container">
+
+                        <div id="pwm-graph">
+                            <svg id="pwm-visualisation"></svg>
+                            <script type="text/javascript">
+                                pwm.initChart(50);
+                            </script>
+                        </div>
+
+                        <div id="pwm-slider">
+                            <label for="widthSlider">Duty Cycle:</label>
+                            <input type="range" min="0" max="100" value="50" id="widthSlider" step="1" oninput="pwm.updateGraph(value)">
+                            <output for="widthSlider" id="dutyCycle">50</output>
+                            <label>%</label>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
                     <h2>What Makes a Robot?</h2>
                     <ul>
                         <li>Input
@@ -198,99 +244,6 @@ five.Board().on("ready", function() {
 
 				<section>
 				</section>
-
-        <section id="pwm" data-state="pwm">
-          <h3>PWM</h3>
-          <div id="pwm-container">
-
-            <div id="pwm-graph">
-              <script src="lib/js/d3.v3.min.js" charset="utf-8"></script>
-
-              <svg id="pwm-visualisation"></svg>
-              <script type="text/javascript">
-                var WIDTH = 1000;
-                var HEIGHT = 500;
-                var NUM_PULSES = 5;
-                var data = new Array(4 * NUM_PULSES);
-                var margin = {top: 20, right:50, bottom:20, left:50};
-                var xScale = d3.scale.linear()
-                            .range([margin.left, WIDTH - margin.right])
-                            .domain([0, NUM_PULSES * 100]);
-                var yScale = d3.scale.linear()
-                            .range([HEIGHT - margin.top, margin.bottom])
-                            .domain([0, 100]);
-                var xAxis = d3.svg.axis()
-                           .scale(xScale) 
-                           .ticks(0);
-                           // .ticks(NUM_PULSES);
-                var yAxis = d3.svg.axis()
-                           .scale(yScale)
-                           .orient("left")
-                           .ticks(0);
-                var vis = d3.select("#pwm-visualisation")
-                           .attr("height", HEIGHT)
-                           .attr("width", WIDTH);
-
-                function updateGraph(dutyCycle) {
-                    document.querySelector('#dutyCycle').value = dutyCycle;
-                    initData(dutyCycle);
-                    render();
-                }
-
-                function initData(dutyCycle) {
-                  for (var i = 0; i < NUM_PULSES; i++) {
-                    data[(i*4)+0] = { time: (i * 100),                     y: 0 }
-                    data[(i*4)+1] = { time: (i * 100),                     y: 100 }
-                    data[(i*4)+2] = { time: (i * 100) + Number(dutyCycle), y: 100 }
-                    data[(i*4)+3] = { time: (i * 100) + Number(dutyCycle), y: 0 }
-                  };
-                }
-
-                function initChart(dutyCycle) {
-                    console.log("initChart with dutyCycle", dutyCycle);
-                    initData(dutyCycle);
-
-                    vis.append("svg:g")
-                        .attr("class", "x axis")
-                        .attr("transform", "translate(0," + (HEIGHT - margin.bottom) + ")")
-                        .call(xAxis);
-                    vis.append("svg:g")
-                        .attr("class", "y axis")
-                        .attr("transform", "translate(" + (margin.left) + ",0)")
-                        .call(yAxis);
-                    render();
-                }
-
-                function render() {
-                    
-                    vis.selectAll(".line").remove();
-
-                    var lineGen = d3.svg.line()
-                        .x(function(d) { return xScale(d.time); })
-                        .y(function(d) { return yScale(d.y);    })
-                        .interpolate("linear");
-
-                    vis.append('svg:path')
-                        .attr("class", "line")
-                        .attr('d', lineGen(data))
-                        .attr('stroke', 'white')
-                        .attr('stroke-width', 2)
-                        .attr('fill', 'blue');
-                }
-                initChart(50);
-              </script>
-            </div>
-
-            <div id="pwm-slider">
-              <label for="widthSlider">Duty Cycle:</label>
-              <input type="range" min="0" max="100" value="50" id="widthSlider" step="1" oninput="updateGraph(value)">
-              <output for="widthSlider" id="dutyCycle">50</output>
-              <label>%</label>
-            </div>
-
-          </div>
-  
-        </section>
 
 				<section>
 				</section>
