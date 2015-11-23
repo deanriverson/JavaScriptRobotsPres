@@ -10,5 +10,16 @@ img.plain {
     border: none;
     box-shadow: none;
     padding: 0;
-    margin: 5px  !important;
+    margin: 5px  !important; /* ugly but effective */
+    background: none !important;
+}
+
+span.red {
+    color: red;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+#us-first {
+    margin-top: -0.5em;
 }

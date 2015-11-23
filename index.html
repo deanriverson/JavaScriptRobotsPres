@@ -43,11 +43,13 @@
 			<div class="slides">
 				<section>
 					<h2>JavaScript Robots</h2>
+                    <img class="plain" src="img/heres-johnny.png" alt="Artwork by Mike Sgier, http://msgierillustration.com/">
+                    <p><small style="font-size: 35%;">Artwork by Mike Sgier, http://msgierillustration.com/</small></p>
 				</section>
 
 				<section>
 					<h2>Who am I?</h2>
-                    <div class="fragment">
+                    <div>
                         <ul class="whoami">
                             <li>Dean Iverson<br>
                                 <small><img class="plain" src="img/twitter-ios-logo.png" width="20">@deanriverson</small><br>
@@ -59,25 +61,131 @@
                     </div>
 				</section>
 
-				<section>
-					<h2>Johnny-Five</h2>
-					<img height="480" src="img/j5_org.png" style="border: none; box-shadow: none;">
-					<p><small>http://johnny-five.io/</small></p>
-				</section>
+                <section>
+                    <h2>FIRST Robotics</h2>
+                    <p id="us-first"><small>
+                        <span class="red">F</span>or
+                        <span class="red">I</span>nspiration and
+                        <span class="red">R</span>ecognition of
+                        <span class="red">S</span>cience and
+                        <span class="red">T</span>echnologoy
+                    </small></p>
+                    <img src="img/highlanders.jpg" height="300">
+                    <p><small>http://coloradofirst.org/</small></p>
+                </section>
 
-				<section>
-					<h2>JavaScript Robots</h2>
-					<p class="fragment">Is JavaScript on an Arduino possible?</p>
-					<p class="fragment">Why?</p>
-				</section>
+                <section>
+                    <h2>FIRST Robotics</h2>
+                    <p id="us-first"><small>
+                        <span class="red">F</span>or
+                        <span class="red">I</span>nspiration and
+                        <span class="red">R</span>ecognition of
+                        <span class="red">S</span>cience and
+                        <span class="red">T</span>echnologoy
+                    </small></p>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/YoX9gXeokfA" frameborder="0" allowfullscreen></iframe>
+                    <p><small>http://coloradofirst.org/</small></p>
+                </section>
 
+                <section>
+                    <h2>JavaScript Robots</h2>
+                    <p class="fragment">Is JavaScript on an Arduino possible?</p>
+                    <p class="fragment">Why?</p>
+                </section>
+
+                <section>
+                    <h2>Johnny-Five</h2>
+                    <img height="480" src="img/j5_org.png" class="plain">
+                    <p><small>http://johnny-five.io/</small></p>
+                </section>
+
+                <section>
+                    <h2>Platform Support</h2>
+                    <img height="400" src="img/j5-platforms.png" style="float: left">
+                    <img height="400" src="img/bot-sq.jpg">
+                    <p><small>http://johnny-five.io/platform-support</small></p>
+                </section>
 
 				<section>
 					<h2>Blinky</h2>
+                    <img src="img/leds.jpg">
 				</section>
 
 				<section>
+                    <h2>Setting Up an Arduino</h2>
+                    <ol>
+                        <li>Plug Arduino into USB port.</li>
+                        <li>Open Arduino IDE.</li>
+                        <li>Set correct board</li>
+                        <li>File&rarr;Examples&rarr;Firmata&rarr;StandardFirmata</li>
+                        <li>Upload Sketch</li>
+                    </ol>
 				</section>
+
+                <section>
+                    <h2>Hello World!</h2>
+                    <pre><code data-trim>
+var five = require('johnny-five');
+
+five.Board().on("ready", function() {
+    console.log("Board is ready!");
+
+    var led = new five.Led(11);
+    setInterval(toggleLed, 500);
+
+    function toggleLed() {
+        led.toggle();
+    }
+});
+
+console.log("Waiting for board to be ready...");
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Hello World!</h2>
+                    <pre><code data-trim>
+var five = require('johnny-five');
+
+five.Board().on("ready", function() {
+    five.Led(11).strobe(500);
+});
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Interactive LED</h2>
+                    <pre><code data-trim>
+var five = require('johnny-five');
+
+five.Board().on("ready", function() {
+    var led = five.Led(11);
+
+    this.repl.inject({
+        led: led
+    });
+});
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>What Makes a Robot?</h2>
+                    <ul>
+                        <li>Input
+                            <ul>
+                                <li>Buttons</li>
+                                <li>Sensors</li>
+                            </ul>
+                        </li>
+                        <li>Output
+                            <ul>
+                                <li>Motors & Servos</li>
+                                <li>LEDs</li>
+                                <li>Speakers</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
 
 				<section>
 				</section>
