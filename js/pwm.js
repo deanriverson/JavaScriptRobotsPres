@@ -45,11 +45,15 @@ pwm = (function () {
 
         vis.append("svg:g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0," + (HEIGHT - margin.bottom) + ")")
+            .attr("transform", "translate(0," + (HEIGHT - margin.bottom + 3) + ")")
+            .attr('stroke', 'LightSteelBlue')
+            .attr('stroke-width', 6)
             .call(xAxis);
         vis.append("svg:g")
             .attr("class", "y axis")
-            .attr("transform", "translate(" + (margin.left) + ",0)")
+            .attr("transform", "translate(" + (margin.left - 3) + ",0)")
+            .attr('stroke', 'LightSteelBlue')
+            .attr('stroke-width', 6)
             .call(yAxis);
         render();
     }
